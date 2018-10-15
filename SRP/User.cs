@@ -44,17 +44,17 @@ namespace SRP
         /// <summary>
         /// N in the SRP formula
         /// </summary>
-        private BigInteger N;
+        private SrpBigInteger N;
 
         /// <summary>
         /// g in the SRP formula
         /// </summary>
-        private BigInteger g;
+        private SrpBigInteger g;
 
         /// <summary>
         /// a in the SRP formula
         /// </summary>
-        private BigInteger a;
+        private SrpBigInteger a;
 
         /// <summary>
         /// A in the SRP formula
@@ -64,7 +64,7 @@ namespace SRP
         /// <summary>
         /// k in the SRP formula
         /// </summary>
-        private BigInteger k;
+        private SrpBigInteger k;
 
         /// <summary>
         /// H_AMK in the SRP formula
@@ -96,26 +96,26 @@ namespace SRP
             this.username = username;
             this.password = password;
             this.authenticated = false;
-            N = byte_N != null ? new BigInteger(byte_N) : Constants.N;
-            g = byte_g != null ? new BigInteger(byte_g) : Constants.g;
+            N = byte_N != null ? new SrpBigInteger(byte_N) : Constants.N;
+            g = byte_g != null ? new SrpBigInteger(byte_g) : Constants.g;
 
             // Generate a random 32 byte a
             byte[] byte_a = new byte[32];
             RNGCryptoServiceProvider.Create().GetBytes(byte_a);
-            this.a = new BigInteger(byte_a).abs();
+            this.a = new SrpBigInteger(byte_a).abs();
 
             // Compute A
             byte_A = g.modPow(a, N).getBytes();
             
             // Compute k in byte array form
             byte[] byte_k;
-            using (SHA512 h = SHA512.Create())
+            using (SHA256 h = SHA256.Create())
             {
                 byte_k = h.ComputeHash(N.getBytes().Concat(g.getBytes()).ToArray());
             }
 
             // Get BigInteger k and store it
-            this.k = new BigInteger(byte_k).abs();
+            this.k = new SrpBigInteger(byte_k).abs();
         }
 
         /// <summary>
@@ -135,8 +135,8 @@ namespace SRP
         /// <returns>M or null</returns>
         public byte[] ProcessChallenge(byte[] byte_s, byte[] byte_B)
         {
-            BigInteger s = new BigInteger(byte_s).abs();
-            BigInteger B = new BigInteger(byte_B).abs();
+            SrpBigInteger s = new SrpBigInteger(byte_s).abs();
+            SrpBigInteger B = new SrpBigInteger(byte_B).abs();
 
             // SRP-6a dictated safety check
             if(B % N == 0)
@@ -147,11 +147,11 @@ namespace SRP
             // Compute M
             byte[] byte_M;
 
-            using(SHA512 h = SHA512.Create())
+            using(SHA256 h = SHA256.Create())
             {
                 byte[] byte_u = h.ComputeHash(byte_A.Concat(B.getBytes()).ToArray());
             
-                BigInteger u = new BigInteger(byte_u);
+                SrpBigInteger u = new SrpBigInteger(byte_u);
 
                 // SRP-6a dictated safety check
                 if(u == 0)
@@ -164,15 +164,15 @@ namespace SRP
                 byte[] byte_I = encoding.GetBytes(username);
                 byte[] byte_p = encoding.GetBytes(password);
                 byte[] byte_x = Common.GenerateX(byte_s, byte_I, byte_p);
-                BigInteger x = new BigInteger(byte_x).abs();
+                SrpBigInteger x = new SrpBigInteger(byte_x).abs();
 
                 // Compute v
-                BigInteger v = g.modPow(x, N).abs();
+                SrpBigInteger v = g.modPow(x, N).abs();
 
                 // Compute S
                 // The remainder is computed here, not the modulo.
                 // This means that, if n is negative, we need to do N - remainder to get the modulo
-                BigInteger S = (B - k * v).modPow(a + u * x, N);
+                SrpBigInteger S = (B - k * v).modPow(a + u * x, N);
 
                 if (S < 0)
                 {

@@ -71,17 +71,17 @@ namespace SRP
             this.authenticated = false;
 
             // Compute
-            using (SHA512 h = SHA512.Create())
+            using (SHA256 h = SHA256.Create())
             {
                 // Get bigIntegers from passed byte arrays
-                BigInteger N = byte_N != null ? new BigInteger(byte_N) : Constants.N;
-                BigInteger g = byte_g != null ? new BigInteger(byte_g) : Constants.g;
-                BigInteger A = new BigInteger(byte_A);
-                BigInteger v = new BigInteger(byte_v);
+                SrpBigInteger N = byte_N != null ? new SrpBigInteger(byte_N) : Constants.N;
+                SrpBigInteger g = byte_g != null ? new SrpBigInteger(byte_g) : Constants.g;
+                SrpBigInteger A = new SrpBigInteger(byte_A);
+                SrpBigInteger v = new SrpBigInteger(byte_v);
                 
                 // Compute k
                 byte[] byte_k = h.ComputeHash(N.getBytes().Concat(g.getBytes()).ToArray());
-                BigInteger k = new BigInteger(byte_k);
+                SrpBigInteger k = new SrpBigInteger(byte_k);
 
                 // SRP 6-a dictated check
                 safety_failed = A % N == 0;
@@ -90,17 +90,17 @@ namespace SRP
                     // Compute a random cryptographically strong value for b
                     byte[] byte_b = new byte[32];
                     RNGCryptoServiceProvider.Create().GetBytes(byte_b);
-                    BigInteger b = new BigInteger(byte_b);
+                    SrpBigInteger b = new SrpBigInteger(byte_b);
 
                     // Compute B as per the SRP spec
-                    BigInteger B = (k * v + g.modPow(b, N)) % N;
+                    SrpBigInteger B = (k * v + g.modPow(b, N)) % N;
 
                     // Compute u
                     byte[] byte_u = h.ComputeHash(byte_A.Concat(B.getBytes()).ToArray());
-                    BigInteger u = new BigInteger(byte_u);
+                    SrpBigInteger u = new SrpBigInteger(byte_u);
 
                     // Compute S as per SRP spec
-                    BigInteger S = (A * v.modPow(u, N)).modPow(b, N);
+                    SrpBigInteger S = (A * v.modPow(u, N)).modPow(b, N);
 
                     // Get the byte array for K, the hashed up S
                     byte_K = h.ComputeHash(S.getBytes());

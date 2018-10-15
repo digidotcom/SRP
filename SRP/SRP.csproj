@@ -37,7 +37,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BigInteger.cs" />
+    <Compile Include="SrpBigInteger.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="User.cs" />

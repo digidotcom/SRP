@@ -133,7 +133,7 @@
 using System;
 
 
-public class BigInteger
+public class SrpBigInteger
 {
         // maximum length of the BigInteger in uint (4 bytes)
         // change this to suit the required level of precision.
@@ -173,7 +173,7 @@ public class BigInteger
         // Constructor (Default value for BigInteger is 0
         //***********************************************************************
 
-        public BigInteger()
+        public SrpBigInteger()
         {
                 data = new uint[maxLength];
                 dataLength = 1;
@@ -184,7 +184,7 @@ public class BigInteger
         // Constructor (Default value provided by long)
         //***********************************************************************
 
-        public BigInteger(long value)
+        public SrpBigInteger(long value)
         {
                 data = new uint[maxLength];
                 long tempVal = value;
@@ -220,7 +220,7 @@ public class BigInteger
         // Constructor (Default value provided by ulong)
         //***********************************************************************
 
-        public BigInteger(ulong value)
+        public SrpBigInteger(ulong value)
         {
                 data = new uint[maxLength];
 
@@ -248,7 +248,7 @@ public class BigInteger
         // Constructor (Default value provided by BigInteger)
         //***********************************************************************
 
-        public BigInteger(BigInteger bi)
+        public SrpBigInteger(SrpBigInteger bi)
         {
                 data = new uint[maxLength];
 
@@ -284,10 +284,10 @@ public class BigInteger
         //
         //***********************************************************************
 
-        public BigInteger(string value, int radix)
+        public SrpBigInteger(string value, int radix)
         {
-                BigInteger multiplier = new BigInteger(1);
-                BigInteger result = new BigInteger();
+                SrpBigInteger multiplier = new SrpBigInteger(1);
+                SrpBigInteger result = new SrpBigInteger();
                 value = (value.ToUpper()).Trim();
                 int limit = 0;
 
@@ -356,7 +356,7 @@ public class BigInteger
         //
         //***********************************************************************
 
-        public BigInteger(byte[] inData)
+        public SrpBigInteger(byte[] inData)
         {
                 dataLength = inData.Length >> 2;
 
@@ -396,7 +396,7 @@ public class BigInteger
         // specified length.)
         //***********************************************************************
 
-        public BigInteger(byte[] inData, int inLen)
+        public SrpBigInteger(byte[] inData, int inLen)
         {
                 dataLength = inLen >> 2;
 
@@ -438,7 +438,7 @@ public class BigInteger
         // Constructor (Default value provided by an array of unsigned integers)
         //*********************************************************************
 
-        public BigInteger(uint[] inData)
+        public SrpBigInteger(uint[] inData)
         {
                 dataLength = inData.Length;
 
@@ -462,24 +462,24 @@ public class BigInteger
         // For BigInteger bi = 10;
         //***********************************************************************
 
-        public static implicit operator BigInteger(long value)
+        public static implicit operator SrpBigInteger(long value)
         {
-                return (new BigInteger(value));
+                return (new SrpBigInteger(value));
         }
 
-        public static implicit operator BigInteger(ulong value)
+        public static implicit operator SrpBigInteger(ulong value)
         {
-                return (new BigInteger(value));
+                return (new SrpBigInteger(value));
         }
 
-        public static implicit operator BigInteger(int value)
+        public static implicit operator SrpBigInteger(int value)
         {
-                return (new BigInteger((long)value));
+                return (new SrpBigInteger((long)value));
         }
 
-        public static implicit operator BigInteger(uint value)
+        public static implicit operator SrpBigInteger(uint value)
         {
-                return (new BigInteger((ulong)value));
+                return (new SrpBigInteger((ulong)value));
         }
 
 
@@ -487,9 +487,9 @@ public class BigInteger
         // Overloading of addition operator
         //***********************************************************************
 
-        public static BigInteger operator +(BigInteger bi1, BigInteger bi2)
+        public static SrpBigInteger operator +(SrpBigInteger bi1, SrpBigInteger bi2)
         {
-                BigInteger result = new BigInteger();
+                SrpBigInteger result = new SrpBigInteger();
 
                 result.dataLength = (bi1.dataLength > bi2.dataLength) ? bi1.dataLength : bi2.dataLength;
 
@@ -527,9 +527,9 @@ public class BigInteger
         // Overloading of the unary ++ operator
         //***********************************************************************
 
-        public static BigInteger operator ++(BigInteger bi1)
+        public static SrpBigInteger operator ++(SrpBigInteger bi1)
         {
-                BigInteger result = new BigInteger(bi1);
+                SrpBigInteger result = new SrpBigInteger(bi1);
 
                 long val, carry = 1;
                 int index = 0;
@@ -572,9 +572,9 @@ public class BigInteger
         // Overloading of subtraction operator
         //***********************************************************************
 
-        public static BigInteger operator -(BigInteger bi1, BigInteger bi2)
+        public static SrpBigInteger operator -(SrpBigInteger bi1, SrpBigInteger bi2)
         {
-                BigInteger result = new BigInteger();
+                SrpBigInteger result = new SrpBigInteger();
 
                 result.dataLength = (bi1.dataLength > bi2.dataLength) ? bi1.dataLength : bi2.dataLength;
 
@@ -621,9 +621,9 @@ public class BigInteger
         // Overloading of the unary -- operator
         //***********************************************************************
 
-        public static BigInteger operator --(BigInteger bi1)
+        public static SrpBigInteger operator --(SrpBigInteger bi1)
         {
-                BigInteger result = new BigInteger(bi1);
+                SrpBigInteger result = new SrpBigInteger(bi1);
 
                 long val;
                 bool carryIn = true;
@@ -668,7 +668,7 @@ public class BigInteger
         // Overloading of multiplication operator
         //***********************************************************************
 
-        public static BigInteger operator *(BigInteger bi1, BigInteger bi2)
+        public static SrpBigInteger operator *(SrpBigInteger bi1, SrpBigInteger bi2)
         {
                 int lastPos = maxLength-1;
                 bool bi1Neg = false, bi2Neg = false;
@@ -687,7 +687,7 @@ public class BigInteger
                 }
                 catch(Exception) {}
 
-                BigInteger result = new BigInteger();
+                SrpBigInteger result = new SrpBigInteger();
 
                 // multiply the absolute values
                 try
@@ -764,9 +764,9 @@ public class BigInteger
         // Overloading of unary << operators
         //***********************************************************************
 
-        public static BigInteger operator <<(BigInteger bi1, int shiftVal)
+        public static SrpBigInteger operator <<(SrpBigInteger bi1, int shiftVal)
         {
-                BigInteger result = new BigInteger(bi1);
+                SrpBigInteger result = new SrpBigInteger(bi1);
                 result.dataLength = shiftLeft(result.data, shiftVal);
 
                 return result;
@@ -818,9 +818,9 @@ public class BigInteger
         // Overloading of unary >> operators
         //***********************************************************************
 
-        public static BigInteger operator >>(BigInteger bi1, int shiftVal)
+        public static SrpBigInteger operator >>(SrpBigInteger bi1, int shiftVal)
         {
-                BigInteger result = new BigInteger(bi1);
+                SrpBigInteger result = new SrpBigInteger(bi1);
                 result.dataLength = shiftRight(result.data, shiftVal);
 
 
@@ -890,9 +890,9 @@ public class BigInteger
         // Overloading of the NOT operator (1's complement)
         //***********************************************************************
 
-        public static BigInteger operator ~(BigInteger bi1)
+        public static SrpBigInteger operator ~(SrpBigInteger bi1)
         {
-                BigInteger result = new BigInteger(bi1);
+                SrpBigInteger result = new SrpBigInteger(bi1);
 
                 for(int i = 0; i < maxLength; i++)
                         result.data[i] = (uint)(~(bi1.data[i]));
@@ -910,15 +910,15 @@ public class BigInteger
         // Overloading of the NEGATE operator (2's complement)
         //***********************************************************************
 
-        public static BigInteger operator -(BigInteger bi1)
+        public static SrpBigInteger operator -(SrpBigInteger bi1)
         {
                 // handle neg of zero separately since it'll cause an overflow
                 // if we proceed.
 
                 if(bi1.dataLength == 1 && bi1.data[0] == 0)
-                        return (new BigInteger());
+                        return (new SrpBigInteger());
 
-                BigInteger result = new BigInteger(bi1);
+                SrpBigInteger result = new SrpBigInteger(bi1);
 
                 // 1's complement
                 for(int i = 0; i < maxLength; i++)
@@ -954,13 +954,13 @@ public class BigInteger
         // Overloading of equality operator
         //***********************************************************************
 
-        public static bool operator ==(BigInteger bi1, BigInteger bi2)
+        public static bool operator ==(SrpBigInteger bi1, SrpBigInteger bi2)
         {
                 return bi1.Equals(bi2);
         }
 
 
-        public static bool operator !=(BigInteger bi1, BigInteger bi2)
+        public static bool operator !=(SrpBigInteger bi1, SrpBigInteger bi2)
         {
                 return !(bi1.Equals(bi2));
         }
@@ -968,7 +968,7 @@ public class BigInteger
 
         public override bool Equals(object o)
         {
-                BigInteger bi = (BigInteger)o;
+                SrpBigInteger bi = (SrpBigInteger)o;
 
                 if(this.dataLength != bi.dataLength)
                         return false;
@@ -992,7 +992,7 @@ public class BigInteger
         // Overloading of inequality operator
         //***********************************************************************
 
-        public static bool operator >(BigInteger bi1, BigInteger bi2)
+        public static bool operator >(SrpBigInteger bi1, SrpBigInteger bi2)
         {
         	int pos = maxLength - 1;
 
@@ -1018,7 +1018,7 @@ public class BigInteger
         }
 
 
-        public static bool operator <(BigInteger bi1, BigInteger bi2)
+        public static bool operator <(SrpBigInteger bi1, SrpBigInteger bi2)
         {
         	int pos = maxLength - 1;
 
@@ -1044,13 +1044,13 @@ public class BigInteger
         }
 
 
-        public static bool operator >=(BigInteger bi1, BigInteger bi2)
+        public static bool operator >=(SrpBigInteger bi1, SrpBigInteger bi2)
         {
                 return (bi1 == bi2 || bi1 > bi2);
         }
 
 
-        public static bool operator <=(BigInteger bi1, BigInteger bi2)
+        public static bool operator <=(SrpBigInteger bi1, SrpBigInteger bi2)
         {
                 return (bi1 == bi2 || bi1 < bi2);
         }
@@ -1063,8 +1063,8 @@ public class BigInteger
         // Algorithm taken from [1]
         //***********************************************************************
 
-        private static void multiByteDivide(BigInteger bi1, BigInteger bi2,
-                                            BigInteger outQuotient, BigInteger outRemainder)
+        private static void multiByteDivide(SrpBigInteger bi1, SrpBigInteger bi2,
+                                            SrpBigInteger outQuotient, SrpBigInteger outRemainder)
         {
                 uint[] result = new uint[maxLength];
 
@@ -1134,8 +1134,8 @@ public class BigInteger
                         for(int h = 0; h < divisorLen; h++)
                                 dividendPart[h] = remainder[pos-h];
 
-                        BigInteger kk = new BigInteger(dividendPart);
-                        BigInteger ss = bi2 * (long)q_hat;
+                        SrpBigInteger kk = new SrpBigInteger(dividendPart);
+                        SrpBigInteger ss = bi2 * (long)q_hat;
 
                         //Console.WriteLine("ss before = " + ss);
                         while(ss > kk)
@@ -1144,7 +1144,7 @@ public class BigInteger
                                 ss -= bi2;
                                 //Console.WriteLine(ss);
                         }
-                        BigInteger yy = kk - ss;
+                        SrpBigInteger yy = kk - ss;
 
                         //Console.WriteLine("ss = " + ss);
                         //Console.WriteLine("kk = " + kk);
@@ -1193,8 +1193,8 @@ public class BigInteger
         // a divisor that has only 1 digit.
         //***********************************************************************
 
-        private static void singleByteDivide(BigInteger bi1, BigInteger bi2,
-                                             BigInteger outQuotient, BigInteger outRemainder)
+        private static void singleByteDivide(SrpBigInteger bi1, SrpBigInteger bi2,
+                                             SrpBigInteger outQuotient, SrpBigInteger outRemainder)
         {
                 uint[] result = new uint[maxLength];
                 int resultPos = 0;
@@ -1258,10 +1258,10 @@ public class BigInteger
         // Overloading of division operator
         //***********************************************************************
 
-        public static BigInteger operator /(BigInteger bi1, BigInteger bi2)
+        public static SrpBigInteger operator /(SrpBigInteger bi1, SrpBigInteger bi2)
         {
-                BigInteger quotient = new BigInteger();
-                BigInteger remainder = new BigInteger();
+                SrpBigInteger quotient = new SrpBigInteger();
+                SrpBigInteger remainder = new SrpBigInteger();
 
                 int lastPos = maxLength-1;
                 bool divisorNeg = false, dividendNeg = false;
@@ -1301,10 +1301,10 @@ public class BigInteger
         // Overloading of modulus operator
         //***********************************************************************
 
-        public static BigInteger operator %(BigInteger bi1, BigInteger bi2)
+        public static SrpBigInteger operator %(SrpBigInteger bi1, SrpBigInteger bi2)
         {
-                BigInteger quotient = new BigInteger();
-                BigInteger remainder = new BigInteger(bi1);
+                SrpBigInteger quotient = new SrpBigInteger();
+                SrpBigInteger remainder = new SrpBigInteger(bi1);
 
                 int lastPos = maxLength-1;
                 bool dividendNeg = false;
@@ -1341,9 +1341,9 @@ public class BigInteger
         // Overloading of bitwise AND operator
         //***********************************************************************
 
-        public static BigInteger operator &(BigInteger bi1, BigInteger bi2)
+        public static SrpBigInteger operator &(SrpBigInteger bi1, SrpBigInteger bi2)
         {
-                BigInteger result = new BigInteger();
+                SrpBigInteger result = new SrpBigInteger();
 
                 int len = (bi1.dataLength > bi2.dataLength) ? bi1.dataLength : bi2.dataLength;
 
@@ -1366,9 +1366,9 @@ public class BigInteger
         // Overloading of bitwise OR operator
         //***********************************************************************
 
-        public static BigInteger operator |(BigInteger bi1, BigInteger bi2)
+        public static SrpBigInteger operator |(SrpBigInteger bi1, SrpBigInteger bi2)
         {
-                BigInteger result = new BigInteger();
+                SrpBigInteger result = new SrpBigInteger();
 
                 int len = (bi1.dataLength > bi2.dataLength) ? bi1.dataLength : bi2.dataLength;
 
@@ -1391,9 +1391,9 @@ public class BigInteger
         // Overloading of bitwise XOR operator
         //***********************************************************************
 
-        public static BigInteger operator ^(BigInteger bi1, BigInteger bi2)
+        public static SrpBigInteger operator ^(SrpBigInteger bi1, SrpBigInteger bi2)
         {
-                BigInteger result = new BigInteger();
+                SrpBigInteger result = new SrpBigInteger();
 
                 int len = (bi1.dataLength > bi2.dataLength) ? bi1.dataLength : bi2.dataLength;
 
@@ -1416,12 +1416,12 @@ public class BigInteger
         // Returns max(this, bi)
         //***********************************************************************
 
-        public BigInteger max(BigInteger bi)
+        public SrpBigInteger max(SrpBigInteger bi)
         {
                 if(this > bi)
-                        return (new BigInteger(this));
+                        return (new SrpBigInteger(this));
                 else
-                        return (new BigInteger(bi));
+                        return (new SrpBigInteger(bi));
         }
 
 
@@ -1429,12 +1429,12 @@ public class BigInteger
         // Returns min(this, bi)
         //***********************************************************************
 
-        public BigInteger min(BigInteger bi)
+        public SrpBigInteger min(SrpBigInteger bi)
         {
                 if(this < bi)
-                        return (new BigInteger(this));
+                        return (new SrpBigInteger(this));
                 else
-                        return (new BigInteger(bi));
+                        return (new SrpBigInteger(bi));
 
         }
 
@@ -1443,12 +1443,12 @@ public class BigInteger
         // Returns the absolute value
         //***********************************************************************
 
-        public BigInteger abs()
+        public SrpBigInteger abs()
         {
                 if((this.data[maxLength - 1] & 0x80000000) != 0)
                         return (-this);
                 else
-                        return (new BigInteger(this));
+                        return (new SrpBigInteger(this));
         }
 
 
@@ -1481,7 +1481,7 @@ public class BigInteger
                 string charSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
                 string result = "";
 
-                BigInteger a = this;
+                SrpBigInteger a = this;
 
                 bool negative = false;
                 if((a.data[maxLength-1] & 0x80000000) != 0)
@@ -1494,9 +1494,9 @@ public class BigInteger
                         catch(Exception) {}
                 }
 
-                BigInteger quotient = new BigInteger();
-                BigInteger remainder = new BigInteger();
-                BigInteger biRadix = new BigInteger(radix);
+                SrpBigInteger quotient = new SrpBigInteger();
+                SrpBigInteger remainder = new SrpBigInteger();
+                SrpBigInteger biRadix = new SrpBigInteger(radix);
 
                 if(a.dataLength == 1 && a.data[0] == 0)
                         result = "0";
@@ -1553,13 +1553,13 @@ public class BigInteger
         // Modulo Exponentiation
         //***********************************************************************
 
-        public BigInteger modPow(BigInteger exp, BigInteger n)
+        public SrpBigInteger modPow(SrpBigInteger exp, SrpBigInteger n)
         {
                 if((exp.data[maxLength-1] & 0x80000000) != 0)
                         throw (new ArithmeticException("Positive exponents only."));
 
-                BigInteger resultNum = 1;
-	        BigInteger tempNum;
+                SrpBigInteger resultNum = 1;
+	        SrpBigInteger tempNum;
 	        bool thisNegative = false;
 
 	        if((this.data[maxLength-1] & 0x80000000) != 0)   // negative this
@@ -1574,7 +1574,7 @@ public class BigInteger
 	                n = -n;
 
                 // calculate constant = b^(2k) / m
-                BigInteger constant = new BigInteger();
+                SrpBigInteger constant = new SrpBigInteger();
 
                 int i = n.dataLength << 1;
                 constant.data[i] = 0x00000001;
@@ -1628,13 +1628,13 @@ public class BigInteger
         // Reference [4]
         //***********************************************************************
 
-        private BigInteger BarrettReduction(BigInteger x, BigInteger n, BigInteger constant)
+        private SrpBigInteger BarrettReduction(SrpBigInteger x, SrpBigInteger n, SrpBigInteger constant)
         {
                 int k = n.dataLength,
                     kPlusOne = k+1,
                     kMinusOne = k-1;
 
-                BigInteger q1 = new BigInteger();
+                SrpBigInteger q1 = new SrpBigInteger();
 
                 // q1 = x / b^(k-1)
                 for(int i = kMinusOne, j = 0; i < x.dataLength; i++, j++)
@@ -1644,8 +1644,8 @@ public class BigInteger
                         q1.dataLength = 1;
 
 
-                BigInteger q2 = q1 * constant;
-                BigInteger q3 = new BigInteger();
+                SrpBigInteger q2 = q1 * constant;
+                SrpBigInteger q3 = new SrpBigInteger();
 
                 // q3 = q2 / b^(k+1)
                 for(int i = kPlusOne, j = 0; i < q2.dataLength; i++, j++)
@@ -1657,7 +1657,7 @@ public class BigInteger
 
                 // r1 = x mod b^(k+1)
                 // i.e. keep the lowest (k+1) words
-                BigInteger r1 = new BigInteger();
+                SrpBigInteger r1 = new SrpBigInteger();
                 int lengthToCopy = (x.dataLength > kPlusOne) ? kPlusOne : x.dataLength;
                 for(int i = 0; i < lengthToCopy; i++)
                         r1.data[i] = x.data[i];
@@ -1667,7 +1667,7 @@ public class BigInteger
                 // r2 = (q3 * n) mod b^(k+1)
                 // partial multiplication of q3 and n
 
-                BigInteger r2 = new BigInteger();
+                SrpBigInteger r2 = new SrpBigInteger();
                 for(int i = 0; i < q3.dataLength; i++)
                 {
                         if(q3.data[i] == 0)     continue;
@@ -1694,7 +1694,7 @@ public class BigInteger
                 r1 -= r2;
                 if((r1.data[maxLength-1] & 0x80000000) != 0)        // negative
                 {
-                        BigInteger val = new BigInteger();
+                        SrpBigInteger val = new SrpBigInteger();
                         val.data[kPlusOne] = 0x00000001;
                         val.dataLength = kPlusOne + 1;
                         r1 += val;
@@ -1711,10 +1711,10 @@ public class BigInteger
         // Returns gcd(this, bi)
         //***********************************************************************
 
-        public BigInteger gcd(BigInteger bi)
+        public SrpBigInteger gcd(SrpBigInteger bi)
         {
-                BigInteger x;
-                BigInteger y;
+                SrpBigInteger x;
+                SrpBigInteger y;
 
                 if((data[maxLength-1] & 0x80000000) != 0)     // negative
                         x = -this;
@@ -1726,7 +1726,7 @@ public class BigInteger
                 else
                         y = bi;
 
-	        BigInteger g = y;
+	        SrpBigInteger g = y;
 
 	        while(x.dataLength > 1 || (x.dataLength == 1 && x.data[0] != 0))
 	        {
@@ -1831,7 +1831,7 @@ public class BigInteger
 
         public bool FermatLittleTest(int confidence)
         {
-                BigInteger thisVal;
+                SrpBigInteger thisVal;
                 if((this.data[maxLength-1] & 0x80000000) != 0)        // negative
                         thisVal = -this;
                 else
@@ -1850,8 +1850,8 @@ public class BigInteger
                         return false;
 
 	        int bits = thisVal.bitCount();
-	        BigInteger a = new BigInteger();
-	        BigInteger p_sub1 = thisVal - (new BigInteger(1));
+	        SrpBigInteger a = new SrpBigInteger();
+	        SrpBigInteger p_sub1 = thisVal - (new SrpBigInteger(1));
 	        Random rand = new Random();
 
 	        for(int round = 0; round < confidence; round++)
@@ -1876,12 +1876,12 @@ public class BigInteger
 		        }
 
                         // check whether a factor exists (fix for version 1.03)
-		        BigInteger gcdTest = a.gcd(thisVal);
+		        SrpBigInteger gcdTest = a.gcd(thisVal);
                         if(gcdTest.dataLength == 1 && gcdTest.data[0] != 1)
                                 return false;
 
 		        // calculate a^(p-1) mod p
-		        BigInteger expResult = a.modPow(p_sub1, thisVal);
+		        SrpBigInteger expResult = a.modPow(p_sub1, thisVal);
 
 		        int resultLen = expResult.dataLength;
 
@@ -1921,7 +1921,7 @@ public class BigInteger
 
         public bool RabinMillerTest(int confidence)
         {
-                BigInteger thisVal;
+                SrpBigInteger thisVal;
                 if((this.data[maxLength-1] & 0x80000000) != 0)        // negative
                         thisVal = -this;
                 else
@@ -1941,7 +1941,7 @@ public class BigInteger
 
 
                 // calculate values of s and t
-                BigInteger p_sub1 = thisVal - (new BigInteger(1));
+                SrpBigInteger p_sub1 = thisVal - (new SrpBigInteger(1));
                 int s = 0;
 
                 for(int index = 0; index < p_sub1.dataLength; index++)
@@ -1960,10 +1960,10 @@ public class BigInteger
                         }
                 }
 
-                BigInteger t = p_sub1 >> s;
+                SrpBigInteger t = p_sub1 >> s;
 
 	        int bits = thisVal.bitCount();
-	        BigInteger a = new BigInteger();
+	        SrpBigInteger a = new SrpBigInteger();
 	        Random rand = new Random();
 
 	        for(int round = 0; round < confidence; round++)
@@ -1988,11 +1988,11 @@ public class BigInteger
 		        }
 
                         // check whether a factor exists (fix for version 1.03)
-		        BigInteger gcdTest = a.gcd(thisVal);
+		        SrpBigInteger gcdTest = a.gcd(thisVal);
                         if(gcdTest.dataLength == 1 && gcdTest.data[0] != 1)
                                 return false;
 
-                        BigInteger b = a.modPow(t, thisVal);
+                        SrpBigInteger b = a.modPow(t, thisVal);
 
                         /*
                         Console.WriteLine("a = " + a.ToString(10));
@@ -2046,7 +2046,7 @@ public class BigInteger
 
         public bool SolovayStrassenTest(int confidence)
         {
-                BigInteger thisVal;
+                SrpBigInteger thisVal;
                 if((this.data[maxLength-1] & 0x80000000) != 0)        // negative
                         thisVal = -this;
                 else
@@ -2066,9 +2066,9 @@ public class BigInteger
 
 
 	        int bits = thisVal.bitCount();
-	        BigInteger a = new BigInteger();
-	        BigInteger p_sub1 = thisVal - 1;
-	        BigInteger p_sub1_shift = p_sub1 >> 1;
+	        SrpBigInteger a = new SrpBigInteger();
+	        SrpBigInteger p_sub1 = thisVal - 1;
+	        SrpBigInteger p_sub1_shift = p_sub1 >> 1;
 
 	        Random rand = new Random();
 
@@ -2094,18 +2094,18 @@ public class BigInteger
 		        }
 
                         // check whether a factor exists (fix for version 1.03)
-		        BigInteger gcdTest = a.gcd(thisVal);
+		        SrpBigInteger gcdTest = a.gcd(thisVal);
                         if(gcdTest.dataLength == 1 && gcdTest.data[0] != 1)
                                 return false;
 
 		        // calculate a^((p-1)/2) mod p
 
-		        BigInteger expResult = a.modPow(p_sub1_shift, thisVal);
+		        SrpBigInteger expResult = a.modPow(p_sub1_shift, thisVal);
 		        if(expResult == p_sub1)
 		                expResult = -1;
 
                         // calculate Jacobi symbol
-                        BigInteger jacob = Jacobi(a, thisVal);
+                        SrpBigInteger jacob = Jacobi(a, thisVal);
 
                         //Console.WriteLine("a = " + a.ToString(10) + " b = " + thisVal.ToString(10));
                         //Console.WriteLine("expResult = " + expResult.ToString(10) + " Jacob = " + jacob.ToString(10));
@@ -2135,7 +2135,7 @@ public class BigInteger
 
         public bool LucasStrongTest()
         {
-                BigInteger thisVal;
+                SrpBigInteger thisVal;
                 if((this.data[maxLength-1] & 0x80000000) != 0)        // negative
                         thisVal = -this;
                 else
@@ -2157,7 +2157,7 @@ public class BigInteger
         }
 
 
-        private bool LucasStrongTestHelper(BigInteger thisVal)
+        private bool LucasStrongTestHelper(SrpBigInteger thisVal)
         {
                 // Do the test (selects D based on Selfridge)
                 // Let D be the first element of the sequence
@@ -2169,7 +2169,7 @@ public class BigInteger
 
                 while(!done)
                 {
-                        int Jresult = BigInteger.Jacobi(D, thisVal);
+                        int Jresult = SrpBigInteger.Jacobi(D, thisVal);
 
                         if(Jresult == -1)
                                 done = true;    // J(D, this) = 1
@@ -2181,7 +2181,7 @@ public class BigInteger
                                 if(dCount == 20)
                                 {
                                         // check for square
-                                        BigInteger root = thisVal.sqrt();
+                                        SrpBigInteger root = thisVal.sqrt();
                                         if(root * root == thisVal)
                                                 return false;
                                 }
@@ -2203,7 +2203,7 @@ public class BigInteger
                 Console.WriteLine("J(D|n) = " + BigInteger.Jacobi(D, thisVal));
                 */
 
-                BigInteger p_add1 = thisVal + 1;
+                SrpBigInteger p_add1 = thisVal + 1;
                 int s = 0;
 
                 for(int index = 0; index < p_add1.dataLength; index++)
@@ -2222,11 +2222,11 @@ public class BigInteger
                         }
                 }
 
-                BigInteger t = p_add1 >> s;
+                SrpBigInteger t = p_add1 >> s;
 
                 // calculate constant = b^(2k) / m
                 // for Barrett Reduction
-                BigInteger constant = new BigInteger();
+                SrpBigInteger constant = new SrpBigInteger();
 
                 int nLen = thisVal.dataLength << 1;
                 constant.data[nLen] = 0x00000001;
@@ -2234,7 +2234,7 @@ public class BigInteger
 
                 constant = constant / thisVal;
 
-                BigInteger[] lucas = LucasSequenceHelper(1, Q, t, thisVal, constant, 0);
+                SrpBigInteger[] lucas = LucasSequenceHelper(1, Q, t, thisVal, constant, 0);
                 bool isPrime = false;
 
                 if((lucas[0].dataLength == 1 && lucas[0].data[0] == 0) ||
@@ -2267,13 +2267,13 @@ public class BigInteger
                         // If n is prime and gcd(n, Q) == 1, then
                         // Q^((n+1)/2) = Q * Q^((n-1)/2) is congruent to (Q * J(Q, n)) mod n
 
-                        BigInteger g = thisVal.gcd(Q);
+                        SrpBigInteger g = thisVal.gcd(Q);
                         if(g.dataLength == 1 && g.data[0] == 1)         // gcd(this, Q) == 1
                         {
                                 if((lucas[2].data[maxLength-1] & 0x80000000) != 0)
                                         lucas[2] += thisVal;
 
-                                BigInteger temp = (Q * BigInteger.Jacobi(Q, thisVal)) % thisVal;
+                                SrpBigInteger temp = (Q * SrpBigInteger.Jacobi(Q, thisVal)) % thisVal;
                                 if((temp.data[maxLength-1] & 0x80000000) != 0)
                                         temp += thisVal;
 
@@ -2296,7 +2296,7 @@ public class BigInteger
 
         public bool isProbablePrime(int confidence)
         {
-                BigInteger thisVal;
+                SrpBigInteger thisVal;
                 if((this.data[maxLength-1] & 0x80000000) != 0)        // negative
                         thisVal = -this;
                 else
@@ -2306,12 +2306,12 @@ public class BigInteger
                 // test for divisibility by primes < 2000
                 for(int p = 0; p < primesBelow2000.Length; p++)
                 {
-                        BigInteger divisor = primesBelow2000[p];
+                        SrpBigInteger divisor = primesBelow2000[p];
 
                         if(divisor >= thisVal)
                                 break;
 
-                        BigInteger resultNum = thisVal % divisor;
+                        SrpBigInteger resultNum = thisVal % divisor;
                         if(resultNum.IntValue() == 0)
                         {
                                 /*
@@ -2356,7 +2356,7 @@ public class BigInteger
 
         public bool isProbablePrime()
         {
-                BigInteger thisVal;
+                SrpBigInteger thisVal;
                 if((this.data[maxLength-1] & 0x80000000) != 0)        // negative
                         thisVal = -this;
                 else
@@ -2378,12 +2378,12 @@ public class BigInteger
                 // test for divisibility by primes < 2000
                 for(int p = 0; p < primesBelow2000.Length; p++)
                 {
-                        BigInteger divisor = primesBelow2000[p];
+                        SrpBigInteger divisor = primesBelow2000[p];
 
                         if(divisor >= thisVal)
                                 break;
 
-                        BigInteger resultNum = thisVal % divisor;
+                        SrpBigInteger resultNum = thisVal % divisor;
                         if(resultNum.IntValue() == 0)
                         {
 				//Console.WriteLine("Not prime!  Divisible by {0}\n",
@@ -2396,7 +2396,7 @@ public class BigInteger
                 // Perform BASE 2 Rabin-Miller Test
 
                 // calculate values of s and t
-                BigInteger p_sub1 = thisVal - (new BigInteger(1));
+                SrpBigInteger p_sub1 = thisVal - (new SrpBigInteger(1));
                 int s = 0;
 
                 for(int index = 0; index < p_sub1.dataLength; index++)
@@ -2415,13 +2415,13 @@ public class BigInteger
                         }
                 }
 
-                BigInteger t = p_sub1 >> s;
+                SrpBigInteger t = p_sub1 >> s;
 
 	        int bits = thisVal.bitCount();
-	        BigInteger a = 2;
+	        SrpBigInteger a = 2;
 
                 // b = a^t mod p
-                BigInteger b = a.modPow(t, thisVal);
+                SrpBigInteger b = a.modPow(t, thisVal);
                 bool result = false;
 
                 if(b.dataLength == 1 && b.data[0] == 1)         // a^t mod p = 1
@@ -2485,7 +2485,7 @@ public class BigInteger
         // Algorithm adapted from [3] and [4] with some optimizations
         //***********************************************************************
 
-        public static int Jacobi(BigInteger a, BigInteger b)
+        public static int Jacobi(SrpBigInteger a, SrpBigInteger b)
         {
                 // Jacobi defined only for odd integers
                 if((b.data[0] & 0x1) == 0)
@@ -2520,7 +2520,7 @@ public class BigInteger
                         }
                 }
 
-                BigInteger a1 = a >> e;
+                SrpBigInteger a1 = a >> e;
 
                 int s = 1;
                 if((e & 0x1) != 0 && ((b.data[0] & 0x7) == 3 || (b.data[0] & 0x7) == 5))
@@ -2541,9 +2541,9 @@ public class BigInteger
         // Generates a positive BigInteger that is probably prime.
         //***********************************************************************
 
-        public static BigInteger genPseudoPrime(int bits, int confidence, Random rand)
+        public static SrpBigInteger genPseudoPrime(int bits, int confidence, Random rand)
         {
-	        BigInteger result = new BigInteger();
+	        SrpBigInteger result = new SrpBigInteger();
 	        bool done = false;
 
 	        while(!done)
@@ -2563,10 +2563,10 @@ public class BigInteger
         // that gcd(number, this) = 1
         //***********************************************************************
 
-        public BigInteger genCoPrime(int bits, Random rand)
+        public SrpBigInteger genCoPrime(int bits, Random rand)
         {
 	        bool done = false;
-	        BigInteger result = new BigInteger();
+	        SrpBigInteger result = new SrpBigInteger();
 
 	        while(!done)
 	        {
@@ -2574,7 +2574,7 @@ public class BigInteger
 	                //Console.WriteLine(result.ToString(16));
 
 		        // gcd test
-		        BigInteger g = result.gcd(this);
+		        SrpBigInteger g = result.gcd(this);
 			if(g.dataLength == 1 && g.data[0] == 1)
                                 done = true;
 	        }
@@ -2588,25 +2588,25 @@ public class BigInteger
         // the inverse does not exist.  (i.e. gcd(this, modulus) != 1)
         //***********************************************************************
 
-        public BigInteger modInverse(BigInteger modulus)
+        public SrpBigInteger modInverse(SrpBigInteger modulus)
         {
-                BigInteger[] p = { 0, 1 };
-                BigInteger[] q = new BigInteger[2];    // quotients
-                BigInteger[] r = { 0, 0 };             // remainders
+                SrpBigInteger[] p = { 0, 1 };
+                SrpBigInteger[] q = new SrpBigInteger[2];    // quotients
+                SrpBigInteger[] r = { 0, 0 };             // remainders
 
                 int step = 0;
 
-                BigInteger a = modulus;
-                BigInteger b = this;
+                SrpBigInteger a = modulus;
+                SrpBigInteger b = this;
 
                 while(b.dataLength > 1 || (b.dataLength == 1 && b.data[0] != 0))
                 {
-                        BigInteger quotient = new BigInteger();
-                        BigInteger remainder = new BigInteger();
+                        SrpBigInteger quotient = new SrpBigInteger();
+                        SrpBigInteger remainder = new SrpBigInteger();
 
                         if(step > 1)
                         {
-                                BigInteger pval = (p[0] - (p[1] * q[0])) % modulus;
+                                SrpBigInteger pval = (p[0] - (p[1] * q[0])) % modulus;
                                 p[0] = p[1];
                                 p[1] = pval;
                         }
@@ -2636,7 +2636,7 @@ public class BigInteger
                 if(r[0].dataLength > 1 || (r[0].dataLength == 1 && r[0].data[0] != 1))
                         throw (new ArithmeticException("No inverse!"));
 
-                BigInteger result = ((p[0] - (p[1] * q[0])) % modulus);
+                SrpBigInteger result = ((p[0] - (p[1] * q[0])) % modulus);
 
                 if((result.data[maxLength - 1] & 0x80000000) != 0)
                         result += modulus;  // get the least positive modulus
@@ -2741,7 +2741,7 @@ public class BigInteger
         //
         //***********************************************************************
 
-        public BigInteger sqrt()
+        public SrpBigInteger sqrt()
         {
                 uint numBits = (uint)this.bitCount();
 
@@ -2755,7 +2755,7 @@ public class BigInteger
 
                 uint mask;
 
-                BigInteger result = new BigInteger();
+                SrpBigInteger result = new SrpBigInteger();
                 if(bitPos == 0)
                         mask = 0x80000000;
                 else
@@ -2816,12 +2816,12 @@ public class BigInteger
         //       V(0) = 2 % n, V(1) = P % n
         //***********************************************************************
 
-        public static BigInteger[] LucasSequence(BigInteger P, BigInteger Q,
-                                                 BigInteger k, BigInteger n)
+        public static SrpBigInteger[] LucasSequence(SrpBigInteger P, SrpBigInteger Q,
+                                                 SrpBigInteger k, SrpBigInteger n)
         {
                 if(k.dataLength == 1 && k.data[0] == 0)
                 {
-                        BigInteger[] result = new BigInteger[3];
+                        SrpBigInteger[] result = new SrpBigInteger[3];
 
                         result[0] = 0; result[1] = 2 % n; result[2] = 1 % n;
                         return result;
@@ -2829,7 +2829,7 @@ public class BigInteger
 
                 // calculate constant = b^(2k) / m
                 // for Barrett Reduction
-                BigInteger constant = new BigInteger();
+                SrpBigInteger constant = new SrpBigInteger();
 
                 int nLen = n.dataLength << 1;
                 constant.data[nLen] = 0x00000001;
@@ -2856,7 +2856,7 @@ public class BigInteger
                         }
                 }
 
-                BigInteger t = k >> s;
+                SrpBigInteger t = k >> s;
 
                 //Console.WriteLine("s = " + s + " t = " + t);
                 return LucasSequenceHelper(P, Q, t, n, constant, s);
@@ -2870,11 +2870,11 @@ public class BigInteger
         // k must be odd.  i.e LSB == 1
         //***********************************************************************
 
-        private static BigInteger[] LucasSequenceHelper(BigInteger P, BigInteger Q,
-                                                        BigInteger k, BigInteger n,
-                                                        BigInteger constant, int s)
+        private static SrpBigInteger[] LucasSequenceHelper(SrpBigInteger P, SrpBigInteger Q,
+                                                        SrpBigInteger k, SrpBigInteger n,
+                                                        SrpBigInteger constant, int s)
         {
-                BigInteger[] result = new BigInteger[3];
+                SrpBigInteger[] result = new SrpBigInteger[3];
 
                 if((k.data[0] & 0x00000001) == 0)
                         throw (new ArgumentException("Argument k must be odd."));
@@ -2884,7 +2884,7 @@ public class BigInteger
 
                 // v = v0, v1 = v1, u1 = u1, Q_k = Q^0
 
-                BigInteger v = 2 % n, Q_k = 1 % n,
+                SrpBigInteger v = 2 % n, Q_k = 1 % n,
                            v1 = P % n, u1 = Q_k;
                 bool flag = true;
 
@@ -3029,18 +3029,18 @@ public class BigInteger
 		                val2[0] = (byte)(rand.NextDouble() * 256);
 
                         Console.WriteLine(count);
-		        BigInteger bn1 = new BigInteger(val, t1);
-		        BigInteger bn2 = new BigInteger(val2, t2);
+		        SrpBigInteger bn1 = new SrpBigInteger(val, t1);
+		        SrpBigInteger bn2 = new SrpBigInteger(val2, t2);
 
 
                         // Determine the quotient and remainder by dividing
                         // the first number by the second.
 
-		        BigInteger bn3 = bn1 / bn2;
-		        BigInteger bn4 = bn1 % bn2;
+		        SrpBigInteger bn3 = bn1 / bn2;
+		        SrpBigInteger bn4 = bn1 % bn2;
 
 		        // Recalculate the number
-		        BigInteger bn5 = (bn3 * bn2) + bn4;
+		        SrpBigInteger bn5 = (bn3 * bn2) + bn4;
 
                         // Make sure they're the same
         		if(bn5 != bn1)
@@ -3069,9 +3069,9 @@ public class BigInteger
 	        byte[] val = new byte[64];
 
 	        // private and public key
-                BigInteger bi_e = new BigInteger("a932b948feed4fb2b692609bd22164fc9edb59fae7880cc1eaff7b3c9626b7e5b241c27a974833b2622ebe09beb451917663d47232488f23a117fc97720f1e7", 16);
-                BigInteger bi_d = new BigInteger("4adf2f7a89da93248509347d2ae506d683dd3a16357e859a980c4f77a4e2f7a01fae289f13a851df6e9db5adaa60bfd2b162bbbe31f7c8f828261a6839311929d2cef4f864dde65e556ce43c89bbbf9f1ac5511315847ce9cc8dc92470a747b8792d6a83b0092d2e5ebaf852c85cacf34278efa99160f2f8aa7ee7214de07b7", 16);
-                BigInteger bi_n = new BigInteger("e8e77781f36a7b3188d711c2190b560f205a52391b3479cdb99fa010745cbeba5f2adc08e1de6bf38398a0487c4a73610d94ec36f17f3f46ad75e17bc1adfec99839589f45f95ccc94cb2a5c500b477eb3323d8cfab0c8458c96f0147a45d27e45a4d11d54d77684f65d48f15fafcc1ba208e71e921b9bd9017c16a5231af7f", 16);
+                SrpBigInteger bi_e = new SrpBigInteger("a932b948feed4fb2b692609bd22164fc9edb59fae7880cc1eaff7b3c9626b7e5b241c27a974833b2622ebe09beb451917663d47232488f23a117fc97720f1e7", 16);
+                SrpBigInteger bi_d = new SrpBigInteger("4adf2f7a89da93248509347d2ae506d683dd3a16357e859a980c4f77a4e2f7a01fae289f13a851df6e9db5adaa60bfd2b162bbbe31f7c8f828261a6839311929d2cef4f864dde65e556ce43c89bbbf9f1ac5511315847ce9cc8dc92470a747b8792d6a83b0092d2e5ebaf852c85cacf34278efa99160f2f8aa7ee7214de07b7", 16);
+                SrpBigInteger bi_n = new SrpBigInteger("e8e77781f36a7b3188d711c2190b560f205a52391b3479cdb99fa010745cbeba5f2adc08e1de6bf38398a0487c4a73610d94ec36f17f3f46ad75e17bc1adfec99839589f45f95ccc94cb2a5c500b477eb3323d8cfab0c8458c96f0147a45d27e45a4d11d54d77684f65d48f15fafcc1ba208e71e921b9bd9017c16a5231af7f", 16);
 
                 Console.WriteLine("e =\n" + bi_e.ToString(10));
                 Console.WriteLine("\nd =\n" + bi_d.ToString(10));
@@ -3105,9 +3105,9 @@ public class BigInteger
                         Console.Write("Round = " + count);
 
                         // encrypt and decrypt data
-		        BigInteger bi_data = new BigInteger(val, t1);
-                        BigInteger bi_encrypted = bi_data.modPow(bi_e, bi_n);
-                        BigInteger bi_decrypted = bi_encrypted.modPow(bi_d, bi_n);
+		        SrpBigInteger bi_data = new SrpBigInteger(val, t1);
+                        SrpBigInteger bi_encrypted = bi_data.modPow(bi_e, bi_n);
+                        SrpBigInteger bi_decrypted = bi_encrypted.modPow(bi_d, bi_n);
 
                         // compare
                         if(bi_decrypted != bi_data)
@@ -3163,16 +3163,16 @@ public class BigInteger
                 };
 
 
-                BigInteger bi_p = new BigInteger(pseudoPrime1);
-                BigInteger bi_q = new BigInteger(pseudoPrime2);
-                BigInteger bi_pq = (bi_p-1)*(bi_q-1);
-                BigInteger bi_n = bi_p * bi_q;
+                SrpBigInteger bi_p = new SrpBigInteger(pseudoPrime1);
+                SrpBigInteger bi_q = new SrpBigInteger(pseudoPrime2);
+                SrpBigInteger bi_pq = (bi_p-1)*(bi_q-1);
+                SrpBigInteger bi_n = bi_p * bi_q;
 
 	        for(int count = 0; count < rounds; count++)
 	        {
 	                // generate private and public key
-                        BigInteger bi_e = bi_pq.genCoPrime(512, rand);
-                        BigInteger bi_d = bi_e.modInverse(bi_pq);
+                        SrpBigInteger bi_e = bi_pq.genCoPrime(512, rand);
+                        SrpBigInteger bi_d = bi_e.modInverse(bi_pq);
 
                         Console.WriteLine("\ne =\n" + bi_e.ToString(10));
                         Console.WriteLine("\nd =\n" + bi_d.ToString(10));
@@ -3204,9 +3204,9 @@ public class BigInteger
                         Console.Write("Round = " + count);
 
                         // encrypt and decrypt data
-		        BigInteger bi_data = new BigInteger(val, t1);
-                        BigInteger bi_encrypted = bi_data.modPow(bi_e, bi_n);
-                        BigInteger bi_decrypted = bi_encrypted.modPow(bi_d, bi_n);
+		        SrpBigInteger bi_data = new SrpBigInteger(val, t1);
+                        SrpBigInteger bi_encrypted = bi_data.modPow(bi_e, bi_n);
+                        SrpBigInteger bi_decrypted = bi_encrypted.modPow(bi_d, bi_n);
 
                         // compare
                         if(bi_decrypted != bi_data)
@@ -3237,11 +3237,11 @@ public class BigInteger
 
                         Console.Write("Round = " + count);
 
-                        BigInteger a = new BigInteger();
+                        SrpBigInteger a = new SrpBigInteger();
                         a.genRandomBits(t1, rand);
 
-                        BigInteger b = a.sqrt();
-                        BigInteger c = (b+1)*(b+1);
+                        SrpBigInteger b = a.sqrt();
+                        SrpBigInteger c = (b+1)*(b+1);
 
                         // check that b is the largest integer such that b*b <= a
                         if(c <= a)
@@ -3299,7 +3299,7 @@ public class BigInteger
                                 limit += 100;
                         }
 
-                        BigInteger p = new BigInteger(-i);
+                        SrpBigInteger p = new SrpBigInteger(-i);
 
                         if(p.isProbablePrime())
                         {
@@ -3310,7 +3310,7 @@ public class BigInteger
                 Console.WriteLine("\nCount = " + count);
 
 
-                BigInteger bi1 = new BigInteger(pseudoPrime1);
+                SrpBigInteger bi1 = new SrpBigInteger(pseudoPrime1);
                 Console.WriteLine("\n\nPrimality testing for\n" + bi1.ToString() + "\n");
                 Console.WriteLine("SolovayStrassenTest(5) = " + bi1.SolovayStrassenTest(5));
                 Console.WriteLine("RabinMillerTest(5) = " + bi1.RabinMillerTest(5));
@@ -3319,7 +3319,7 @@ public class BigInteger
 
                 Console.Write("\nGenerating 512-bits random pseudoprime. . .");
                 Random rand = new Random();
-                BigInteger prime = BigInteger.genPseudoPrime(512, 5, rand);
+                SrpBigInteger prime = SrpBigInteger.genPseudoPrime(512, 5, rand);
                 Console.WriteLine("\n" + prime);
 
                 //int dwStart = System.Environment.TickCount;

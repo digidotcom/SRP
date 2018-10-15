@@ -36,7 +36,7 @@ namespace SRP
         {
             byte[] byte_x;
 
-            using(SHA512 h = SHA512.Create())
+            using(SHA256 h = SHA256.Create())
             {
                 // Concat username and pw
                 byte[] userPwHash = h.ComputeHash(byte_I.Concat(Constants.Seperator).Concat(byte_p).ToArray());
@@ -63,7 +63,7 @@ namespace SRP
         {
             byte[] byte_M;
 
-            using (SHA512 h = SHA512.Create())
+            using (SHA256 h = SHA256.Create())
             {
                 byte[] byte_Nxorh = HashXor(byte_N, byte_g);
                 byte[] byte_Ih = h.ComputeHash(byte_I);
@@ -82,7 +82,7 @@ namespace SRP
         {
             byte[] ret;
 
-            using(SHA512 h = SHA512.Create())
+            using(SHA256 h = SHA256.Create())
             {
                 // Hash both byte arrays
                 byte_1 = h.ComputeHash(byte_1);
