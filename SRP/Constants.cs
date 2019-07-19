@@ -31,6 +31,11 @@ namespace SRP
         public static SrpBigInteger g = new SrpBigInteger(2);
 
         public static byte[] Seperator = new ASCIIEncoding().GetBytes(":");
+
+        public static string API_USERNAME = "apiservice";
+
+        public static int LENGTH_SALT = 4;
+        public static int LENGTH_VERIFIER = 128;
     }
 
 }
